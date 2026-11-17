@@ -1,1 +1,12 @@
-{"name":"Raid · Angel & Maicol","short_name":"Raid","start_url":".","display":"standalone","background_color":"#14110f","theme_color":"#14110f","icons":[{"src":"icon.png","sizes":"512x512","type":"image/png"}]}
+{
+  "name": "Raid · Angel & Maicol",
+  "short_name": "Raid",
+  "description": "Calculadora de raid de Rust: qué explosivos usar, cuánto azufre farmear y qué lleva cada uno.",
+  "lang": "es",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#14110f",
+  "theme_color": "#14110f",
+  "icons": [{ "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }]
+}

@@ -9,199 +9,628 @@
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" href="icon.png">
 <link rel="manifest" href="manifest.json">
-<title>Calculadora de raid · Angel & Maicol</title>
+<title>Raid · Angel & Maicol</title>
 <style>
+:root{--bg:#14110f;--card:#1f1a17;--card2:#261f1b;--line:#33291f;--line2:#3a302a;--ink:#e8e2d9;--mut:#a99f92;--mut2:#8d8377;--red:#cd412b;--yel:#f2b84b;--blue:#7fb2ff;--green:#7fbf7f;--wood:#c08a52;--stone:#a8a49c;--metal:#cfd5da;--hqm:#5fb0e0}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:#14110f;color:#e8e2d9;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:calc(16px + env(safe-area-inset-top)) 14px 260px;max-width:720px;margin:0 auto}
-h1{font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:-.5px;line-height:1}
-h1 span{color:#cd412b}
-.duo{display:inline-block;margin:8px 0 4px;background:#f2b84b;color:#14110f;font-weight:900;font-size:13px;letter-spacing:2px;padding:3px 10px;border-radius:5px}
-.sub{color:#a99f92;font-size:14px;margin-bottom:14px}
-.label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#a99f92;margin:16px 0 8px;font-weight:700}
-.modes,.presets{display:flex;gap:6px;flex-wrap:wrap}
-.chip{background:#1f1a17;border:1px solid #3a302a;color:#e8e2d9;border-radius:999px;padding:8px 13px;font-size:14px;font-weight:600;cursor:pointer}
-.chip.on{background:#cd412b;border-color:#cd412b;color:#fff}
-.preset{background:#2b231e;border:1px dashed #f2b84b;color:#f2b84b}
-h2{font-size:15px;text-transform:uppercase;letter-spacing:1px;margin:20px 0 8px;display:flex;align-items:center;gap:8px}
-h2:before{content:"";width:5px;height:16px;background:#cd412b}
-.item{display:flex;align-items:center;gap:10px;background:#1f1a17;border:1px solid #33291f;border-radius:10px;padding:9px 10px;margin-bottom:6px}
-.item.has{border-color:#cd412b;background:#261c18}
-.info{flex:1;min-width:0}
-.nm{font-weight:700;font-size:15px}
-.hp{color:#8d8377;font-size:12px;font-weight:400;margin-left:4px}
-.how{font-size:12.5px;color:#f2b84b;margin-top:2px}
-.ctr{display:flex;align-items:center;gap:6px}
-.ctr button{width:36px;height:36px;border-radius:8px;border:none;font-size:20px;font-weight:800;cursor:pointer;background:#2b231e;color:#e8e2d9}
-.ctr button.p{background:#cd412b;color:#fff}
-.ctr .q{min-width:22px;text-align:center;font-weight:800;font-size:17px}
-.note{font-size:12.5px;color:#8d8377;margin:4px 2px 0;line-height:1.4}
-.bar{position:fixed;left:0;right:0;bottom:0;background:#1f1a17;border-top:3px solid #cd412b;padding:12px 14px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(0,0,0,.6)}
-.barin{max-width:720px;margin:0 auto}
-.tot{display:flex;justify-content:space-between;align-items:baseline}
-.tot .s{font-size:30px;font-weight:900;color:#f2b84b}
-.tot .s small{font-size:13px;color:#a99f92;font-weight:600}
-.reset{background:none;border:1px solid #3a302a;color:#a99f92;border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer}
-.roles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.r{border-radius:8px;padding:8px 10px;background:#14110f;border-left:4px solid}
-.r.a{border-color:#f2b84b}.r.m{border-color:#7fb2ff}
-.r b{font-size:13px;display:block}.r.a b{color:#f2b84b}.r.m b{color:#7fb2ff}
-.r div{font-size:14px;margin-top:2px;line-height:1.35}
-.r .sm{font-size:12px;color:#a99f92}
-.empty{color:#8d8377;font-size:14px;padding:6px 0}
-.save{font-size:12px;color:#7fbf7f;margin-top:6px}
-.save.bad{color:#cd8a7a}
-input#q{width:100%;padding:11px 13px;border-radius:10px;border:1px solid #3a302a;background:#1f1a17;color:#e8e2d9;font-size:16px}
-.item.off{opacity:.55}
-.how.nd{color:#8d8377}
-.nt{font-size:12px;color:#8d8377;margin-top:2px}
-.tot .s small{display:block;margin-top:2px}
-.tot>div:last-child{display:flex;gap:6px;flex-shrink:0}
-.tot{gap:10px}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:720px;margin:0 auto;padding-bottom:calc(96px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%}
+body.bopen{padding-bottom:calc(300px + env(safe-area-inset-bottom))}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
+input{font:inherit;color:inherit}
+.top{position:sticky;top:0;z-index:30;background:rgba(20,17,15,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:calc(8px + env(safe-area-inset-top)) 14px 0;border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:8px}
+.logo{flex-shrink:0;line-height:1}
+.logo b{display:block;font-weight:900;font-size:20px;letter-spacing:-.5px;text-transform:uppercase}
+.logo b span{color:var(--red)}
+.logo i{display:inline-block;font-style:normal;font-size:9px;font-weight:900;letter-spacing:1.4px;background:var(--yel);color:#14110f;padding:2px 5px;border-radius:4px;margin-top:3px}
+.raidbtn{flex:1;min-width:0;display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line2);border-radius:10px;padding:0 10px;height:40px;font-weight:700;font-size:14px;text-align:left}
+.raidbtn span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.raidbtn small{color:var(--mut2);font-weight:600;font-size:12px}
+.ib{width:40px;height:40px;border-radius:10px;border:1px solid var(--line2);background:var(--card);display:grid;place-items:center;flex-shrink:0}
+.tabs{display:flex;margin:6px -4px 0}
+.tab{flex:1;padding:9px 2px 10px;font-size:14px;font-weight:700;color:var(--mut);border-bottom:3px solid transparent;position:relative}
+.tab.on{color:var(--ink);border-bottom-color:var(--red)}
+.tab em{font-style:normal;font-size:11px;background:var(--red);color:#fff;border-radius:999px;padding:1px 6px;margin-left:4px;vertical-align:1px}
+.cats{display:flex;gap:6px;overflow-x:auto;padding:8px 0 10px;scrollbar-width:none;margin:0 -14px;padding-left:14px;padding-right:14px}
+.cats::-webkit-scrollbar,.modes::-webkit-scrollbar{display:none}
+main{padding:12px 14px 0}
+.label{font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:var(--mut);margin:14px 0 7px;font-weight:700}
+.label:first-child{margin-top:2px}
+.modes{display:flex;gap:6px;overflow-x:auto;margin:0 -14px;padding:0 14px;scrollbar-width:none}
+.chip{flex-shrink:0;background:var(--card);border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:7px 12px;font-size:13.5px;font-weight:600;white-space:nowrap}
+.chip.on{background:var(--red);border-color:var(--red);color:#fff}
+.chip.ps{background:#2b231e;border:1px dashed var(--yel);color:var(--yel)}
+.chip.sm{padding:6px 11px;font-size:13px}
+input.search{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line2);background:var(--card);font-size:16px;margin-top:12px}
+details.box{margin-top:10px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0 12px}
+details.box summary{list-style:none;padding:10px 0;font-size:13.5px;font-weight:700;color:var(--mut);display:flex;justify-content:space-between;align-items:center}
+details.box summary::-webkit-details-marker{display:none}
+details.box summary:after{content:"▾";color:var(--mut2)}
+details.box[open] summary:after{content:"▴"}
+details.box .in{padding:0 0 12px;display:flex;flex-wrap:wrap;gap:6px}
+h2{font-size:13.5px;text-transform:uppercase;letter-spacing:1px;margin:18px 0 8px;display:flex;align-items:center;gap:8px}
+h2:before{content:"";width:5px;height:15px;background:var(--red)}
+.it{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--mc);border-radius:10px;margin-bottom:6px}
+.it.has{border-color:var(--red);border-left-color:var(--mc);background:var(--card2)}
+.row{display:flex;align-items:center;gap:9px;padding:8px 9px 8px 8px}
+.mi{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:rgba(255,255,255,.04);color:var(--mc);flex-shrink:0}
+.info{flex:1;min-width:0;text-align:left}
+.nm{font-weight:700;font-size:14.5px;line-height:1.25}
+.nm .hp{color:var(--mut2);font-size:11.5px;font-weight:500;margin-left:4px;white-space:nowrap}
+.nm .cv{color:var(--mut2);font-size:11px;margin-left:3px}
+.how{font-size:12.5px;color:var(--yel);margin-top:2px;line-height:1.3}
+.how small{color:var(--mut2);font-size:12px}
+.how .sf{color:var(--mut);white-space:nowrap}
+.tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.tag{font-size:11px;font-weight:700;background:#33291f;color:var(--yel);padding:2px 6px;border-radius:5px}
+.ctr{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.ctr button{width:36px;height:36px;border-radius:8px;font-size:20px;font-weight:800;background:#2b231e;color:var(--ink)}
+.ctr button.p{background:var(--red);color:#fff}
+.ctr input{width:34px;height:36px;text-align:center;font-weight:800;font-size:17px;background:transparent;border:1px solid transparent;border-radius:8px;-moz-appearance:textfield}
+.ctr input:focus{border-color:var(--yel);outline:none;background:#14110f}
+.ctr input::-webkit-outer-spin-button,.ctr input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.opts{padding:2px 10px 12px 51px;display:grid;gap:10px}
+.seg{display:inline-flex;background:#14110f;border:1px solid var(--line2);border-radius:9px;padding:2px}
+.seg button{padding:6px 10px;font-size:13px;font-weight:700;border-radius:7px;color:var(--mut)}
+.seg button.on{background:var(--red);color:#fff}
+.ol{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:5px}
+.hpr{display:flex;align-items:center;gap:10px}
+.hpr input[type=range]{flex:1;accent-color:var(--red)}
+.hpr b{min-width:44px;text-align:right;font-size:14px}
+.nt{font-size:12px;color:var(--mut2);line-height:1.4}
+.off{opacity:.6}
+.off .row{padding-top:9px;padding-bottom:9px}
+.note{font-size:12.5px;color:var(--mut2);margin:12px 2px 0;line-height:1.45}
+.empty{color:var(--mut2);font-size:14px;padding:18px 4px;text-align:center;line-height:1.5}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.big{font-size:32px;font-weight:900;color:var(--yel);line-height:1.05}
+.big small{font-size:13px;color:var(--mut);font-weight:600}
+.sub{font-size:13px;color:var(--mut);margin-top:3px;line-height:1.4}
+.role{border-left:4px solid;border-radius:10px;background:var(--card);padding:10px 12px;margin-bottom:10px}
+.role.a{border-color:var(--yel)}.role.m{border-color:var(--blue)}
+.role h3{font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.role.a h3{color:var(--yel)}.role.m h3{color:var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut2);font-weight:700;text-align:right;padding:3px 4px}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+td{text-align:right;padding:5px 4px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+td.k{font-weight:700}
+td.c{color:var(--yel);font-weight:800}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line2);border-radius:10px;padding:11px 12px;font-weight:700;font-size:14px}
+.btn.pr{background:var(--red);border-color:var(--red);color:#fff}
+.inv{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.inv:first-of-type{border-top:none}
+.inv .info b{font-size:15px}
+.tg{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);text-align:left;width:100%}
+.sw{width:46px;height:28px;border-radius:999px;background:#3a302a;position:relative;flex-shrink:0;transition:background .15s}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#e8e2d9;transition:left .15s}
+.sw.on{background:var(--red)}.sw.on:after{left:21px}
+.prog{height:10px;border-radius:999px;background:#33291f;overflow:hidden;margin:8px 0 4px}
+.prog i{display:block;height:100%;background:var(--green);border-radius:999px}
+.lv{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--mc);border-radius:10px;padding:10px;margin-bottom:6px}
+.lv .ck{width:28px;height:28px;border-radius:8px;border:2px solid var(--line2);display:grid;place-items:center;flex-shrink:0;font-weight:900;color:#14110f}
+.lv.dn{opacity:.55}
+.lv.dn .ck{background:var(--green);border-color:var(--green)}
+.lv.dn .nm{text-decoration:line-through}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--card);border-top:3px solid var(--red);box-shadow:0 -10px 30px rgba(0,0,0,.6)}
+.barin{max-width:720px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+.bh{display:flex;align-items:center;gap:10px;width:100%;text-align:left}
+.bh .s{font-size:26px;font-weight:900;color:var(--yel);line-height:1}
+.bh .s small{display:block;font-size:11.5px;color:var(--mut);font-weight:600;margin-top:3px}
+.bh .mini{flex:1;min-width:0;font-size:12.5px;color:var(--mut);line-height:1.35;text-align:right}
+.bh .mini b{color:var(--ink)}
+.bh .chev{width:34px;height:34px;border-radius:9px;border:1px solid var(--line2);display:grid;place-items:center;flex-shrink:0;transition:transform .2s}
+.bopen .bh .chev{transform:rotate(180deg)}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.r{border-radius:8px;padding:8px 10px;background:var(--bg);border-left:4px solid}
+.r.a{border-color:var(--yel)}.r.m{border-color:var(--blue)}
+.r b{font-size:12px;display:block;letter-spacing:.3px}.r.a b{color:var(--yel)}.r.m b{color:var(--blue)}
+.r div{font-size:13.5px;margin-top:3px;line-height:1.35}
+.r .sm{font-size:12px;color:var(--mut)}
+.half{font-size:12.5px;color:var(--green);margin-top:8px}
+.bar .btns{margin-top:8px}
+.bar .btn{padding:9px 10px;font-size:13.5px;min-width:0}
+.toast{position:fixed;left:50%;transform:translate(-50%,20px);bottom:calc(90px + env(safe-area-inset-bottom));z-index:60;background:#ece6dc;color:#14110f;border-radius:12px;padding:10px 12px 10px 14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.2s;max-width:calc(100% - 28px);width:max-content}
+.toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.bopen .toast{bottom:calc(310px + env(safe-area-inset-bottom))}
+.toast button{color:var(--red);font-weight:800;padding:4px 2px}
+.sheet{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);display:none;align-items:flex-end}
+.sheet.on{display:flex}
+.sheet .pn{background:var(--card);width:100%;max-width:720px;margin:0 auto;border-radius:16px 16px 0 0;padding:14px 14px calc(14px + env(safe-area-inset-bottom));max-height:80vh;overflow:auto}
+.sheet h3{font-size:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.rr{display:flex;align-items:center;gap:6px;padding:8px 0;border-top:1px solid var(--line)}
+.rr .go{flex:1;min-width:0;text-align:left;padding:4px 0}
+.rr .go b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rr .go small{color:var(--mut2);font-size:12px}
+.rr.on .go b{color:var(--yel)}
+.rr .ib{width:36px;height:36px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:12px;color:var(--mut)}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.warn{color:#e59a85;font-size:12.5px;margin-top:6px}
 </style></head><body>
-<h1>Calculadora de <span>raid</span></h1>
-<div class="duo">ANGEL &amp; MAICOL</div>
-<p class="sub">Añadid lo que hay entre vosotros y el loot y os dice qué usar. Los valores son desde fuera (lado duro).</p>
 
-<div class="label">Cómo raidear</div>
-<div class="modes" id="modes"></div>
-
-<div class="label">Bases de ejemplo</div>
-<div class="presets" id="presets"></div>
-
-<div class="label">Buscar</div>
-<input id="q" type="search" placeholder="muro, puerta, torreta..." autocomplete="off">
-<div id="list"></div>
-
-<p class="note" style="margin-top:14px">Los marcos de puerta, paredes con ventana y medias paredes tienen la misma vida que el muro de su material: añadid el muro. El C4 y los satchels hacen lo mismo por los dos lados; los cohetes y las balas salen algo más baratos desde dentro.</p>
-<p class="note">Datos: GameServerKings (tabla y calculadora de raid, 2026) y Supercraft (tronera vertical, barricada, torreta y aerogenerador, agosto 2026). Pueden cambiar un poco con cada parche.</p>
-
-<div class="bar"><div class="barin">
- <div class="tot"><div class="s" id="sulf">0 <small>azufre</small></div><div><button class="reset" id="copy">Copiar plan</button> <button class="reset" id="reset">Vaciar</button></div></div>
- <div class="roles">
-  <div class="r a"><b>ANGEL · explosivos</b><div id="ang">—</div></div>
-  <div class="r m"><b>MAICOL · rifle</b><div id="mai">—</div></div>
+<div class="top">
+ <div class="hd">
+  <div class="logo"><b>R<span>ai</span>d</b><i>ANGEL &amp; MAICOL</i></div>
+  <button class="raidbtn" data-act="sheet"><span id="rname">Raid</span><small>▾</small></button>
+  <button class="ib" data-act="share" aria-label="Compartir con Maicol"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button>
  </div>
- <div class="save" id="save"></div>
-</div></div>
+ <div class="tabs" id="tabs"></div>
+ <div class="cats" id="cats"></div>
+</div>
+
+<main id="main"></main>
+
+<div class="bar" id="bar"><div class="barin" id="barin"></div></div>
+<div class="toast" id="toast"><span id="tmsg"></span><button data-act="undo" id="tundo">Deshacer</button></div>
+<div class="sheet" id="sheet" data-act="closesheet"><div class="pn" id="sheetpn"></div></div>
 
 <script>
-const S={c4:2200,rk:1400,sat:480,ex:25};
-// hard side counts: c4, rockets, satchels, explo; combo = [c4, explo]
+"use strict";
+/* ===================== DATOS ===================== */
+// Azufre por unidad (GameServerKings, build sept 2026; 40mm: 1 tubo + 30 pólvora + 1 explosivo = 2 granadas)
+const S={c4:2200,rk:1400,sat:480,he:85,ex:25};
+const ORDER=["c4","rk","sat","he","ex"];
+const KN={c4:["C4","C4"],rk:["cohete","cohetes"],sat:["satchel","satchels"],he:["granada 40mm","granadas 40mm"],ex:["bala explosiva","balas explosivas"]};
+const KSHORT={c4:["C4","C4"],rk:["cohete","cohetes"],sat:["satchel","satchels"],he:["40mm","40mm"],ex:["bala","balas"]};
+const KT={c4:"C4",rk:"Cohetes",sat:"Satchels",he:"Granadas 40mm",ex:"Balas explosivas"};
+// Protección por material (fracción que se bloquea). ex = daño de una bala explosiva [fuera, dentro]
+const CLS={
+ wood: {pE:.1, pB:.98,pS:.9, ex:[5.21,5.7],   side:true},
+ stone:{pE:.5, pB:.98,pS:.95,ex:[2.75,2.9],   side:true},
+ metal:{pE:.5, pB:.99,pS:.98,ex:[2.5063,2.5063],side:true},
+ mdoor:{pE:.2, pB:.95,pS:1,  ex:[4,4],        side:true},
+ wdoor:{pE:-1, pB:.95,pS:.95,ex:[11.12,11.8], side:true},
+ tc:   {pE:-1, pB:.95,pS:.95,ex:[11.12,11.12],side:false}
+};
+const MAT={wood:["Madera","var(--wood)"],stone:["Piedra","var(--stone)"],metal:["Chapa","var(--metal)"],hqm:["Blindado","var(--hqm)"]};
+const G={mu:"Muros y suelos",pu:"Puertas y escotillas",ve:"Ventanas",ex:"Externos",de:"Defensas y muebles"};
+// k = clase de material (daño calculado); c = recuentos publicados (daño = vida / recuento)
 const T=[
- {g:"Muros",id:"ww",n:"Muro de madera",hp:250,c:[1,2,3,48],x:[0,48,0]},
- {g:"Muros",id:"sw",n:"Muro de piedra",hp:500,c:[2,4,10,182],x:[1,82,0]},
- {g:"Muros",id:"mw",n:"Muro de chapa",hp:1000,c:[4,8,23,399],x:[3,70,0]},
- {g:"Muros",id:"aw",n:"Muro blindado",hp:2000,c:[8,15,46,798],x:[7,30,0]},
- {g:"Suelos, techos y cimientos",id:"fw",n:"Suelo / techo de madera",hp:250,c:[1,2,3,48],x:[0,48,0],nt:"Igual que el muro de madera"},
- {g:"Suelos, techos y cimientos",id:"fs",n:"Suelo / techo de piedra",hp:500,c:[2,4,10,182],x:[1,82,0],nt:"Igual que el muro de piedra"},
- {g:"Suelos, techos y cimientos",id:"fm",n:"Suelo / techo de chapa",hp:1000,c:[4,8,23,399],x:[3,70,0],nt:"Igual que el muro de chapa"},
- {g:"Suelos, techos y cimientos",id:"fa",n:"Suelo / techo blindado",hp:2000,c:[8,15,46,798],x:[7,30,0],nt:"Igual que el muro blindado"},
- {g:"Puertas",id:"wd",n:"Puerta de madera",hp:200,c:[1,1,2,18],x:[0,18,0]},
- {g:"Puertas",id:"md",n:"Puerta de chapa",hp:250,c:[1,2,4,63],x:[0,63,0]},
- {g:"Puertas",id:"gd",n:"Puerta de garaje",hp:600,c:[2,3,9,150],x:[1,40,0]},
- {g:"Puertas",id:"ad",n:"Puerta blindada",hp:1000,c:[3,5,15,250],x:[2,30,0]},
- {g:"Puertas",id:"wdd",n:"Puerta doble de madera",hp:200,c:[1,1,2,18],x:[0,18,0]},
- {g:"Puertas",id:"mdd",n:"Puerta doble de chapa",hp:250,c:[1,2,4,63],x:[0,63,0]},
- {g:"Puertas",id:"add",n:"Puerta doble blindada",hp:1000,c:[3,5,15,250],x:[2,30,0]},
- {g:"Escotillas",id:"lh",n:"Escotilla",hp:250,c:[1,2,4,63],x:[0,63,0]},
- {g:"Escotillas",id:"ah",n:"Escotilla blindada",hp:1000,c:[3,5,15,250],x:[2,30,0]},
- {g:"Ventanas y troneras",id:"gw",n:"Ventana de cristal reforzado",hp:350,c:[2,3,9,140],x:[1,30,0]},
- {g:"Ventanas y troneras",id:"mb",n:"Barrotes metálicos",hp:500,c:[2,4,12,200],x:[2,0,0]},
- {g:"Ventanas y troneras",id:"ve",n:"Tronera metálica vertical",hp:null,c:[2,4,13,163],x:[0,163,0]},
- {g:"Ventanas y troneras",id:"wb",n:"Barrotes de madera",hp:250},
- {g:"Ventanas y troneras",id:"rg",n:"Ventana de cristal blindado",hp:500},
- {g:"Ventanas y troneras",id:"he",n:"Tronera metálica horizontal",hp:500},
- {g:"Ventanas y troneras",id:"ws",n:"Contraventanas de madera",hp:200},
- {g:"Ventanas y troneras",id:"sf",n:"Escaparate",hp:500},
- {g:"Ventanas y troneras",id:"msf",n:"Escaparate metálico",hp:750},
- {g:"Ventanas y troneras",id:"fg",n:"Rejilla de suelo",hp:250},
- {g:"Muros y puertas externos",id:"hw",n:"Muro externo alto de madera",hp:500,c:[2,3,6,96],x:[1,1,0]},
- {g:"Muros y puertas externos",id:"hwg",n:"Puerta externa alta de madera",hp:500,c:[2,3,6,96],x:[1,1,0],nt:"Igual que el muro externo de madera"},
- {g:"Muros y puertas externos",id:"hs",n:"Muro externo alto de piedra",hp:500,c:[2,4,10,182],x:[1,82,0]},
- {g:"Muros y puertas externos",id:"hsg",n:"Puerta externa alta de piedra",hp:500,c:[2,4,10,182],x:[1,82,0],nt:"Igual que el muro externo de piedra"},
- {g:"Muros y puertas externos",id:"bar",n:"Barricada metálica",hp:null,c:[1,3,4,110],x:[0,0,4]},
- {g:"Defensas y muebles",id:"tc",n:"Armario (TC)",hp:100,c:[1,1,1,9],x:[0,9,0]},
- {g:"Defensas y muebles",id:"at",n:"Torreta automática",hp:1000,c:[1,4,2,100],x:[0,0,2],nt:"Lo más barato son 2 satchels"},
- {g:"Defensas y muebles",id:"wt",n:"Aerogenerador",hp:null,c:[1,2,7,77],x:[0,77,0]},
- {g:"Defensas y muebles",id:"sam",n:"Lanzamisiles SAM",hp:1000},
- {g:"Defensas y muebles",id:"wb3",n:"Banco de trabajo nivel 3",hp:750},
- {g:"Defensas y muebles",id:"wb12",n:"Banco de trabajo nivel 1 o 2",hp:500},
- {g:"Defensas y muebles",id:"lb",n:"Caja grande de madera",hp:300},
+ {g:"mu",id:"ww",n:"Muro de madera",hp:250,k:"wood",m:"wood",ic:"wall",a:"pared marco ventana media"},
+ {g:"mu",id:"sw",n:"Muro de piedra",hp:500,k:"stone",m:"stone",ic:"wall",a:"pared marco ventana media"},
+ {g:"mu",id:"mw",n:"Muro de chapa",hp:1000,k:"metal",m:"metal",ic:"wall",a:"pared metal marco ventana media"},
+ {g:"mu",id:"aw",n:"Muro blindado",hp:2000,k:"metal",m:"hqm",ic:"wall",a:"pared hqm armored marco ventana media"},
+ {g:"mu",id:"fw",n:"Suelo / techo de madera",hp:250,k:"wood",m:"wood",ic:"floor",nt:"Igual que el muro de madera.",a:"cimiento"},
+ {g:"mu",id:"fs",n:"Suelo / techo de piedra",hp:500,k:"stone",m:"stone",ic:"floor",nt:"Igual que el muro de piedra.",a:"cimiento"},
+ {g:"mu",id:"fm",n:"Suelo / techo de chapa",hp:1000,k:"metal",m:"metal",ic:"floor",nt:"Igual que el muro de chapa.",a:"cimiento metal"},
+ {g:"mu",id:"fa",n:"Suelo / techo blindado",hp:2000,k:"metal",m:"hqm",ic:"floor",nt:"Igual que el muro blindado.",a:"cimiento hqm armored"},
+ {g:"pu",id:"wd",n:"Puerta de madera",hp:200,k:"wdoor",m:"wood",ic:"door"},
+ {g:"pu",id:"md",n:"Puerta de chapa",hp:250,k:"mdoor",m:"metal",ic:"door",a:"metal"},
+ {g:"pu",id:"gd",n:"Puerta de garaje",hp:600,k:"mdoor",m:"metal",ic:"garage",a:"garaje"},
+ {g:"pu",id:"ad",n:"Puerta blindada",hp:1000,k:"mdoor",m:"hqm",ic:"door",a:"hqm armored"},
+ {g:"pu",id:"wdd",n:"Puerta doble de madera",hp:200,k:"wdoor",m:"wood",ic:"ddoor"},
+ {g:"pu",id:"mdd",n:"Puerta doble de chapa",hp:250,k:"mdoor",m:"metal",ic:"ddoor",a:"metal"},
+ {g:"pu",id:"add",n:"Puerta doble blindada",hp:1000,k:"mdoor",m:"hqm",ic:"ddoor",a:"hqm armored"},
+ {g:"pu",id:"lh",n:"Escotilla",hp:250,k:"mdoor",m:"metal",ic:"hatch",a:"trampilla escalera"},
+ {g:"pu",id:"ah",n:"Escotilla blindada",hp:1000,k:"mdoor",m:"hqm",ic:"hatch",a:"trampilla escalera hqm armored"},
+ {g:"ve",id:"gw",n:"Ventana de cristal reforzado",hp:350,k:"metal",m:"metal",ic:"win",a:"cristal"},
+ {g:"ve",id:"mb",n:"Barrotes metálicos",hp:500,k:"metal",m:"metal",ic:"bars",a:"ventana rejas"},
+ {g:"ve",id:"ve",n:"Tronera metálica vertical",hp:null,c:{c4:2,rk:4,sat:13,ex:163},m:"metal",ic:"emb",a:"ventana embrasure"},
+ {g:"ex",id:"hw",n:"Muro externo alto de madera",hp:500,k:"wood",m:"wood",ic:"high",a:"high external muralla"},
+ {g:"ex",id:"hwg",n:"Puerta externa alta de madera",hp:500,k:"wood",m:"wood",ic:"gate",nt:"Igual que el muro externo de madera.",a:"high external gate muralla"},
+ {g:"ex",id:"hs",n:"Muro externo alto de piedra",hp:500,k:"stone",m:"stone",ic:"high",a:"high external muralla"},
+ {g:"ex",id:"hsg",n:"Puerta externa alta de piedra",hp:500,k:"stone",m:"stone",ic:"gate",nt:"Igual que el muro externo de piedra.",a:"high external gate muralla"},
+ {g:"ex",id:"bar",n:"Barricada metálica",hp:600,c:{c4:1,rk:3,sat:4,ex:110},m:"metal",ic:"barr"},
+ {g:"de",id:"tc",n:"Armario (TC)",hp:100,k:"tc",m:"wood",ic:"tc",a:"tool cupboard armario"},
+ {g:"de",id:"at",n:"Torreta automática",hp:1000,c:{c4:1,rk:4,sat:2,ex:100},m:"metal",ic:"turret",nt:"Lo más barato son 2 satchels.",a:"auto turret"},
+ {g:"de",id:"wt",n:"Aerogenerador",hp:null,c:{c4:1,rk:2,sat:7,ex:77},m:"metal",ic:"turbine",a:"molino wind turbine"},
+ // Sin datos fiables de explosivos
+ {g:"ve",id:"wb",n:"Barrotes de madera",hp:250,nd:1,m:"wood",ic:"bars"},
+ {g:"ve",id:"rg",n:"Ventana de cristal blindado",hp:500,nd:1,m:"hqm",ic:"win"},
+ {g:"ve",id:"hem",n:"Tronera metálica horizontal",hp:500,nd:1,m:"metal",ic:"emb"},
+ {g:"ve",id:"ws",n:"Contraventanas de madera",hp:200,nd:1,m:"wood",ic:"win"},
+ {g:"ve",id:"sf",n:"Escaparate",hp:500,nd:1,m:"wood",ic:"win"},
+ {g:"ve",id:"msf",n:"Escaparate metálico",hp:750,nd:1,m:"metal",ic:"win"},
+ {g:"mu",id:"fg",n:"Rejilla de suelo",hp:250,nd:1,m:"metal",ic:"floor"},
+ {g:"de",id:"sam",n:"Lanzamisiles SAM",hp:1000,nd:1,m:"metal",ic:"turret",nt:"Según RustHelp: unos 2 C4 o 4 cohetes."},
+ {g:"de",id:"wb3",n:"Banco de trabajo nivel 3",hp:750,nd:1,m:"metal",ic:"box"},
+ {g:"de",id:"wb12",n:"Banco de trabajo nivel 1 o 2",hp:500,nd:1,m:"wood",ic:"box"},
+ {g:"de",id:"lb",n:"Caja grande de madera",hp:300,nd:1,m:"wood",ic:"box"}
 ];
-const MODES=[["combo","★ Combo más barato"],["c4","Solo C4"],["rk","Solo cohetes"],["sat","Solo satchels"],["ex","Solo balas"]];
+const TI={};T.forEach(t=>TI[t.id]=t);
 const PRESETS=[
  ["Starter de chapa",{md:2,tc:1}],
  ["Base de piedra",{md:1,sw:1,tc:1}],
  ["Base de chapa",{ad:1,mw:1,tc:1}],
- ["Base gorda",{hs:1,ad:1,mw:2,gd:1,tc:1}],
+ ["Base gorda",{hs:1,ad:1,mw:2,gd:1,tc:1}]
 ];
-let mode="combo",q={};
-try{const d=JSON.parse(localStorage.getItem("raidAM")||"null");if(d){q=d.q||{};mode=d.mode||"combo"}}catch(e){}
-const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".");
-function cost(t){
- const [c4,rk,sat,ex]=t.c;
- if(mode==="combo")return{c4:t.x[0],rk:0,sat:t.x[2],ex:t.x[1]};
- if(mode==="c4")return{c4,rk:0,sat:0,ex:0};
- if(mode==="rk")return{c4:0,rk,sat:0,ex:0};
- if(mode==="sat")return{c4:0,rk:0,sat,ex:0};
- return{c4:0,rk:0,sat:0,ex};
+// Margen al llevar: el C4 no falla, los satchels fallan ~1 de cada 5
+const MG={c4:()=>0,rk:n=>Math.floor(n/10),sat:n=>Math.ceil(n*.25),he:n=>Math.ceil(n*.1),ex:n=>Math.ceil(n*.1)};
+// Materiales por unidad crafteada (pólvora = 2 azufre + 3 carbón; explosivo = 50 pólvora + 3 combustible + 10 azufre + 10 frags)
+const BILL={
+ c4:{s:2200,ch:3000,fr:200,lgf:60,cl:5,tt:2,gp:1000,exp:20},
+ rk:{s:1400,ch:1950,fr:100,lgf:30,pi:2,gp:650,exp:10},
+ sat:{s:480,ch:720,fr:80,cl:10,ro:1,gp:240,bc:4},
+ he:{s:85,ch:120,fr:5,lgf:1.5,pi:.5,gp:40,exp:.5},
+ ex:{s:25,ch:30,fr:5,gp:10}
+};
+const RAW=[["s","Azufre"],["ch","Carbón"],["fr","Fragmentos de metal"],["lgf","Combustible (low grade)"],["cl","Tela"],["tt","Chatarra tecnológica"],["pi","Tubos de metal"],["ro","Cuerda"]];
+const MID=[["gp","Pólvora"],["exp","Explosivos"],["bc","Granadas de lata"]];
+const ANGEL=["c4","rk","sat","he"],MAICOL=["ex"];
+
+/* ===================== CÁLCULO ===================== */
+const dataOK=t=>!t.nd;
+const hasSide=t=>!t.c&&!t.nd&&CLS[t.k].side;
+function dmgOf(t,soft){
+ if(t.c){const H=t.hp||1,d={};for(const k of ORDER)d[k]=t.c[k]?H/t.c[k]:0;return d}
+ const c=CLS[t.k],f=(c.side&&!soft)?.1:1,e=1-c.pE;
+ return{c4:550*e,rk:275*e+75*(1-c.pB)*f,sat:75*e+200*(1-c.pB)+200*(1-c.pS),he:t.k==="tc"?0:35*e+55*(1-c.pB)*f,ex:c.ex[soft?1:0]};
 }
-function sulf(o){return o.c4*S.c4+o.rk*S.rk+o.sat*S.sat+o.ex*S.ex}
-function desc(o){const p=[];if(o.c4)p.push(o.c4+" C4");if(o.rk)p.push(o.rk+" cohete"+(o.rk>1?"s":""));if(o.sat)p.push(o.sat+" satchel"+(o.sat>1?"s":""));if(o.ex)p.push(o.ex+" bala"+(o.ex>1?"s":"")+" explosiva"+(o.ex>1?"s":""));return p.join(" + ")}
+const PC={};
+function getPlans(t,soft,pct,allowed){
+ const key=t.id+"|"+(soft?1:0)+"|"+pct+"|"+allowed.join(",");
+ if(PC[key])return PC[key];
+ const H=(t.hp||1)*pct/100,d=dmgOf(t,soft);
+ const ks=allowed.filter(k=>d[k]>0);
+ const fill=ks.includes("ex");
+ const big=ks.filter(k=>k!=="ex");
+ const need=(rem,k)=>rem<=1e-9?0:Math.ceil(rem/d[k]-1e-7);
+ const seen=new Set(),out=[];
+ const add=o=>{const p=ORDER.map(k=>o[k]||0);const key=p.join(",");if(!seen.has(key)){seen.add(key);out.push(p)}};
+ const subs=[[]];big.forEach(a=>subs.push([a]));
+ for(let i=0;i<big.length;i++)for(let j=i+1;j<big.length;j++)subs.push([big[i],big[j]]);
+ for(const sub of subs){
+  if(!fill){
+   if(!sub.length)continue;
+   const[a,b]=sub;
+   if(!b){add({[a]:need(H,a)});continue}
+   const ma=need(H,a);for(let na=0;na<=ma;na++)add({[a]:na,[b]:need(H-na*d[a],b)});
+   continue;
+  }
+  if(!sub.length){add({ex:need(H,"ex")});continue}
+  const[a,b]=sub,ma=need(H,a);
+  for(let na=1;na<=ma;na++){
+   const r1=H-na*d[a];
+   if(!b){add({[a]:na,ex:need(r1,"ex")});continue}
+   const mb=need(r1,b);
+   for(let nb=1;nb<=mb;nb++)add({[a]:na,[b]:nb,ex:need(r1-nb*d[b],"ex")});
+  }
+ }
+ PC[key]=out;return out;
+}
+function costVec(heCraft){return ORDER.map(k=>k==="he"&&!heCraft?1e7:S[k])}
+function bestPlan(P,cost){let b=null,bc=Infinity;for(const p of P){let c=0;for(let x=0;x<5;x++)c+=p[x]*cost[x];if(c<bc-1e-9){bc=c;b=p}}return b}
+// Elige un plan por pieza para gastar lo mínimo de azufre usando primero el inventario
+function solve(entries,inv,allowed,heCraft){
+ const cost=costVec(heCraft),invA=ORDER.map(k=>inv[k]||0),val=ORDER.map(k=>S[k]);
+ const inst=[];
+ for(const e of entries){
+  const P=getPlans(e.t,e.soft,e.pct,allowed);if(!P.length)continue;
+  const b=P.indexOf(bestPlan(P,cost));
+  for(let i=0;i<e.n;i++)inst.push({e,P,cur:b,i});
+ }
+ const tot=[0,0,0,0,0];inst.forEach(s=>{const p=s.P[s.cur];for(let x=0;x<5;x++)tot[x]+=p[x]});
+ const obj=T=>{let c=0,v=0;for(let x=0;x<5;x++){c+=Math.max(0,T[x]-invA[x])*cost[x];v+=T[x]*val[x]}return c+v*1e-5};
+ let cur=obj(tot);
+ if(invA.some(v=>v>0)){
+  for(let pass=0;pass<40;pass++){
+   let imp=false;
+   for(const s of inst){
+    const p0=s.P[s.cur],B=tot.map((v,x)=>v-p0[x]);
+    let bi=s.cur,bv=cur;
+    for(let i=0;i<s.P.length;i++){
+     if(i===s.cur)continue;const p=s.P[i];let c=0,v=0;
+     for(let x=0;x<5;x++){const t=B[x]+p[x];c+=Math.max(0,t-invA[x])*cost[x];v+=t*val[x]}
+     const o=c+v*1e-5;if(o<bv-1e-6){bv=o;bi=i}
+    }
+    if(bi!==s.cur){const p=s.P[bi];for(let x=0;x<5;x++)tot[x]=B[x]+p[x];s.cur=bi;cur=bv;imp=true}
+   }
+   if(!imp)break;
+  }
+ }
+ return{inst,tot};
+}
+function allowedFor(mode){
+ const heOK=st.heCraft||(st.inv.he||0)>0;
+ if(mode==="combo")return["c4","rk","sat","ex"].concat(heOK?["he"]:[]);
+ return[mode];
+}
+function entriesOf(r){
+ const out=[];
+ for(const t of T){const e=r.q[t.id];if(e&&e.n>0&&dataOK(t))out.push({t,n:e.n,soft:!!e.s&&hasSide(t),pct:e.h||100})}
+ return out;
+}
+function compute(r){
+ const{inst,tot}=solve(entriesOf(r),st.inv,allowedFor(r.mode),st.heCraft);
+ const plan={},bring={},craft={},have={};
+ ORDER.forEach((k,x)=>{
+  plan[k]=tot[x];bring[k]=tot[x]+(tot[x]?MG[k](tot[x]):0);
+  const iv=st.inv[k]||0;have[k]=Math.min(iv,bring[k]);
+  let c=Math.max(0,bring[k]-iv);if((k==="ex"||k==="he")&&c%2)c++;
+  if(k==="he"&&!st.heCraft)c=0;
+  craft[k]=c;
+ });
+ const s0=ORDER.reduce((a,k)=>a+Math.max(0,plan[k]-(st.inv[k]||0))*S[k],0);
+ const s1=ORDER.reduce((a,k)=>a+craft[k]*S[k],0);
+ const heShort=!st.heCraft&&bring.he>(st.inv.he||0);
+ return{inst,plan,bring,craft,have,s0,s1,heShort};
+}
+function bill(craft,kinds){
+ const b={};
+ for(const k of kinds){const n=craft[k]||0;if(!n)continue;for(const m in BILL[k])b[m]=(b[m]||0)+BILL[k][m]*n}
+ for(const m in b)b[m]=Math.ceil(b[m]-1e-9);
+ return b;
+}
+
+/* ===================== ESTADO ===================== */
+const KEY="raidAM2";
+const uid=()=>Math.random().toString(36).slice(2,9);
+function fresh(name,q,mode){return{id:uid(),name,mode:mode||"combo",q:q||{},done:{}}}
+function load(){
+ try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(d&&d.v===2&&d.raids&&d.raids.length)return Object.assign({inv:{},heCraft:false,bar:false,tab:"obj",grp:"all"},d)}catch(e){}
+ let q={},mode="combo";
+ try{const o=JSON.parse(localStorage.getItem("raidAM")||"null");if(o){mode=o.mode||"combo";for(const k in o.q||{})if(o.q[k]>0&&TI[k])q[k]={n:o.q[k],s:0,h:100}}}catch(e){}
+ const r=fresh("Raid 1",q,mode);
+ return{v:2,cur:r.id,raids:[r],inv:{},heCraft:false,bar:false,tab:"obj",grp:"all"};
+}
+let st=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+const cur=()=>st.raids.find(r=>r.id===st.cur)||st.raids[0];
+const ui={open:{},q:""};
+
+/* ===================== UTILIDADES ===================== */
+const $=s=>document.querySelector(s);
+const fmt=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,".");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+function desc(p,short){const L=short?KSHORT:KN,o=[];ORDER.forEach((k,x)=>{const n=Array.isArray(p)?p[x]:(p[k]||0);if(n)o.push(n+" "+L[k][n===1?0:1])});return o.join(" + ")||"nada"}
+const sulfOf=p=>p.reduce((a,n,x)=>a+n*S[ORDER[x]],0);
+const pieces=r=>Object.keys(r.q).reduce((a,k)=>a+((r.q[k]&&TI[k]&&!TI[k].nd)?r.q[k].n:0),0);
+const IC={
+ wall:'<rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 9.7h18M3 14.3h18M9 5v4.7M15 5v4.7M6 9.7v4.6M12 9.7v4.6M18 9.7v4.6M9 14.3V19M15 14.3V19"/>',
+ floor:'<path d="M7 7h14l-4 10H3z"/><path d="M10 7 6 17M15 7l-4 10"/>',
+ door:'<rect x="6" y="3" width="12" height="18" rx="1"/><circle cx="15" cy="12.5" r="1"/>',
+ ddoor:'<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18"/><circle cx="10" cy="12.5" r=".8"/><circle cx="14" cy="12.5" r=".8"/>',
+ garage:'<rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 8h18M3 12h18M3 16h18"/>',
+ hatch:'<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M9 4v16M15 4v16M9 8h6M9 12h6M9 16h6"/>',
+ win:'<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M12 4v16M4 12h16"/>',
+ bars:'<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 4v16M12 4v16M16 4v16"/>',
+ emb:'<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M12 7v10"/>',
+ high:'<path d="M4 21V7l2-3 2 3v14M10 21V7l2-3 2 3v14M16 21V7l2-3 2 3v14"/>',
+ gate:'<path d="M4 21V7l2-3 2 3v14M16 21V7l2-3 2 3v14M8 10h8M8 15h8"/>',
+ barr:'<path d="M3 19 21 5M3 5l18 14M2 12h20"/>',
+ tc:'<rect x="6" y="3" width="12" height="18" rx="1"/><path d="M6 9h12M6 15h12M11 6h2M11 12h2"/>',
+ turret:'<path d="M8 21h8l-1-5H9z"/><rect x="7" y="9" width="10" height="7" rx="2"/><path d="M17 12h5"/>',
+ turbine:'<path d="M12 12v9M9 21h6M12 12V3M12 12l7.5 4.5M12 12l-7.5 4.5"/>',
+ box:'<rect x="3" y="7" width="18" height="12" rx="1"/><path d="M3 11h18M10 11v2h4v-2"/>'
+};
+const ic=n=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[n]||IC.box}</svg>`;
+const chev='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>';
+
+/* ===================== DESHACER ===================== */
+let snapData=null,toastT=0;
+function toast(msg,undo){$("#tmsg").textContent=msg;$("#tundo").style.display=undo?"":"none";const t=$("#toast");t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("on"),undo?5000:2600)}
+function snap(msg){snapData=JSON.stringify(st);toast(msg,true)}
+function undo(){if(!snapData)return;st=JSON.parse(snapData);snapData=null;save();render();toast("Deshecho")}
+
+/* ===================== PINTAR ===================== */
 function render(){
- document.getElementById("modes").innerHTML=MODES.map(([k,l])=>`<button class="chip${k===mode?" on":""}" data-m="${k}">${l}</button>`).join("");
- document.getElementById("presets").innerHTML=PRESETS.map(([l],i)=>`<button class="chip preset" data-p="${i}">${l}</button>`).join("");
- let html="",g="";
- const f=(document.getElementById("q")||{}).value||"";const fl=f.trim().toLowerCase();
+ const r=cur();
+ $("#rname").textContent=r.name;
+ document.body.classList.toggle("bopen",!!st.bar&&st.tab!=="plan");
+ refreshTabs();
+ const cats=$("#cats");
+ if(st.tab==="obj"){cats.style.display="";cats.innerHTML=[["all","Todo"]].concat(Object.entries(G)).map(([k,l])=>`<button class="chip sm${st.grp===k?" on":""}" data-act="grp" data-v="${k}">${l}</button>`).join("")}
+ else{cats.style.display="none";cats.innerHTML=""}
+ const m=$("#main");
+ if(st.tab==="obj")m.innerHTML=objView(r);
+ else if(st.tab==="inv")m.innerHTML=invView();
+ else if(st.tab==="plan")m.innerHTML=planView(r);
+ else m.innerHTML=liveView(r);
+ if(st.tab==="obj")renderList();
+ renderBar();
+}
+function refreshTabs(){const r=cur(),n=pieces(r),ni=ORDER.reduce((a,k)=>a+((st.inv[k]||0)>0?1:0),0);$("#tabs").innerHTML=[["obj","Objetivos",n],["inv","Inventario",ni],["plan","Plan",0],["live","En directo",0]].map(([k,l,b])=>`<button class="tab${st.tab===k?" on":""}" data-act="tab" data-v="${k}">${l}${b?`<em>${b}</em>`:""}</button>`).join("")}
+function objView(r){
+ const heOK=st.heCraft||(st.inv.he||0)>0;
+ const MODES=[["combo","★ Más barato"],["c4","Solo C4"],["rk","Solo cohetes"],["sat","Solo satchels"],["ex","Solo balas"]].concat(heOK?[["he","Solo 40mm"]]:[]);
+ return `<div class="label">Cómo raidear</div>
+ <div class="modes">${MODES.map(([k,l])=>`<button class="chip${k===r.mode?" on":""}" data-act="mode" data-v="${k}">${l}</button>`).join("")}</div>
+ <input id="q" class="search" type="search" placeholder="Buscar: muro, puerta, chapa, tc…" autocomplete="off" value="${esc(ui.q)}">
+ <details class="box"><summary>Bases de ejemplo</summary><div class="in">${PRESETS.map(([l],i)=>`<button class="chip ps" data-act="preset" data-v="${i}">${l}</button>`).join("")}</div></details>
+ <div id="list"></div>
+ <p class="note">Toca el nombre de una pieza para decir si la rompéis <b>desde dentro</b> o si ya está <b>dañada</b>. Toca el número para escribir la cantidad.</p>
+ <p class="note">Marcos de puerta, paredes con ventana y medias paredes tienen la misma vida que el muro de su material: añadid el muro. Desde dentro (lado blando) solo salen más baratas las balas explosivas y las granadas 40mm; el C4, los satchels y los cohetes hacen prácticamente lo mismo por los dos lados.</p>
+ <p class="note">Datos: GameServerKings (archivos del servidor de Rust, septiembre de 2026) y Supercraft (tronera vertical, barricada, torreta y aerogenerador). Pueden cambiar un poco con cada parche.</p>`;
+}
+function renderList(){
+ const r=cur(),L=$("#list");if(!L)return;
+ const fl=norm(ui.q.trim()),allowed=allowedFor(r.mode),cost=costVec(st.heCraft);
+ const match=t=>!fl||norm(t.n+" "+G[t.g]+" "+MAT[t.m][0]+" "+(t.a||"")).includes(fl);
+ let html="",g="",nd=[];
  for(const t of T){
-  if(fl&&!t.n.toLowerCase().includes(fl))continue;
-  if(t.g!==g){g=t.g;html+=`<h2>${g}</h2>`}
-  const n=q[t.id]||0,hp=t.hp?`<span class="hp">${fmt(t.hp)} HP</span>`:"";
-  if(!t.c){html+=`<div class="item off"><div class="info"><div class="nm">${t.n}${hp}</div><div class="how nd">Sin datos de explosivos fiables. No suma al total.</div></div></div>`;continue}
-  const o=cost(t);
-  html+=`<div class="item${n?" has":""}"><div class="info"><div class="nm">${t.n}${hp}</div><div class="how">${desc(o)} · ${fmt(sulf(o))} azufre</div>${t.nt?`<div class="nt">${t.nt}</div>`:""}</div><div class="ctr"><button data-d="${t.id}">−</button><span class="q">${n}</span><button class="p" data-a="${t.id}">+</button></div></div>`;
+  if(st.grp!=="all"&&t.g!==st.grp&&!fl)continue;
+  if(!match(t))continue;
+  if(t.nd){nd.push(t);continue}
+  if(t.g!==g){g=t.g;html+=`<h2>${G[g]}</h2>`}
+  html+=itemHTML(t,r,allowed,cost);
+ }
+ if(nd.length){
+  html+=`<details class="box" style="margin-top:16px"><summary>Sin datos fiables (${nd.length})</summary><div style="padding-bottom:10px">${nd.map(t=>`<div class="it off" style="--mc:${MAT[t.m][1]}"><div class="row"><div class="mi">${ic(t.ic)}</div><div class="info"><div class="nm">${t.n}<span class="hp">${fmt(t.hp)} HP</span></div><div class="how"><small>${t.nt||"No hay cifras fiables de explosivos. No suma al total."}</small></div></div></div></div>`).join("")}</div></details>`;
  }
  if(!html)html='<p class="empty">No hay nada con ese nombre.</p>';
- document.getElementById("list").innerHTML=html;
- const tot={c4:0,rk:0,sat:0,ex:0};
- for(const t of T){const n=q[t.id]||0;if(!n||!t.c)continue;const o=cost(t);for(const k in tot)tot[k]+=o[k]*n}
- const s=sulf(tot);window._tot={tot,s};
- document.getElementById("sulf").innerHTML=`${fmt(s)} <small>azufre · con margen ${fmt(Math.ceil(s*1.1/100)*100)}</small>`;
- const m=v=>v?Math.ceil(v*1.1):0;
- const a=[];if(tot.c4)a.push(`${tot.c4} C4 <span class="sm">(llevad ${m(tot.c4)})</span>`);if(tot.rk)a.push(`${tot.rk} cohetes <span class="sm">(llevad ${m(tot.rk)})</span>`);if(tot.sat)a.push(`${tot.sat} satchels <span class="sm">(llevad ${m(tot.sat)})</span>`);
- document.getElementById("ang").innerHTML=a.length?a.join("<br>"):'<span class="sm">Nada que poner</span>';
- document.getElementById("mai").innerHTML=tot.ex?`${tot.ex} balas explosivas <span class="sm">(llevad ${m(tot.ex)})</span>`:'<span class="sm">Solo cubrir</span>';
- const sv=document.getElementById("save");
- sv.textContent=s?`A medias: unos ${fmt(Math.ceil(s*1.1/2/100)*100)} de azufre a farmear cada uno.`:"";
- try{localStorage.setItem("raidAM",JSON.stringify({q,mode}))}catch(e){}
+ L.innerHTML=html;
 }
-document.addEventListener("click",e=>{
- const b=e.target.closest("button");if(!b)return;
- if(b.dataset.m){mode=b.dataset.m}
- else if(b.dataset.a){q[b.dataset.a]=(q[b.dataset.a]||0)+1}
- else if(b.dataset.d){q[b.dataset.d]=Math.max(0,(q[b.dataset.d]||0)-1)}
- else if(b.dataset.p){q={...PRESETS[+b.dataset.p][1]}}
- else if(b.id==="reset"){q={}}
- else return;
- render();
-});
+function itemHTML(t,r,allowed,cost){
+ const e=r.q[t.id]||{n:0,s:0,h:100},n=e.n||0,soft=!!e.s&&hasSide(t),pct=e.h||100;
+ const P=getPlans(t,soft,pct,allowed),b=P.length?bestPlan(P,cost):null;
+ const how=b?`${desc(b,true)} <span class="sf">· ${fmt(sulfOf(b))} azufre</span>`:`<small>Sin datos para este modo</small>`;
+ const tags=[];if(soft)tags.push("Desde dentro");if(pct<100)tags.push(`Vida ${pct} %`);
+ const open=!!ui.open[t.id];
+ let opts="";
+ if(open){
+  opts=`<div class="opts">${hasSide(t)?`<div><div class="ol">Lado por el que lo rompéis</div><div class="seg"><button class="${soft?"":"on"}" data-act="soft" data-id="${t.id}" data-v="0">Fuera (duro)</button><button class="${soft?"on":""}" data-act="soft" data-id="${t.id}" data-v="1">Dentro (blando)</button></div></div>`:""}
+  <div><div class="ol">Vida que le queda</div><div class="hpr"><input type="range" min="5" max="100" step="5" value="${pct}" data-h="${t.id}"><b id="hl-${t.id}">${pct} %</b></div></div>
+  ${t.nt?`<div class="nt">${t.nt}</div>`:""}</div>`;
+ }
+ return `<div class="it${n?" has":""}" id="it-${t.id}" style="--mc:${MAT[t.m][1]}"><div class="row"><div class="mi">${ic(t.ic)}</div><button class="info" data-act="opt" data-id="${t.id}"><div class="nm">${t.n}${t.hp?`<span class="hp">${fmt(t.hp)} HP</span>`:""}<span class="cv">${open?"▴":"▾"}</span></div><div class="how">${how}</div>${tags.length?`<div class="tags">${tags.map(x=>`<span class="tag">${x}</span>`).join("")}</div>`:""}</button><div class="ctr"><button data-act="dec" data-id="${t.id}" aria-label="Quitar">−</button><input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="99" value="${n}" data-q="${t.id}" aria-label="Cantidad"><button class="p" data-act="inc" data-id="${t.id}" aria-label="Añadir">+</button></div></div>${opts}</div>`;
+}
+function invView(){
+ const rows=ORDER.map(k=>`<div class="inv"><div class="info"><b>${KT[k]}</b><div class="sub">${fmt(S[k])} azufre cada ${k==="ex"?"bala":k==="he"?"granada":"uno"}</div></div><div class="ctr"><button data-act="idec" data-v="${k}" aria-label="Quitar">−</button><input type="number" inputmode="numeric" pattern="[0-9]*" min="0" value="${st.inv[k]||0}" data-i="${k}" style="width:${k==="ex"?52:40}px" aria-label="Cantidad"><button class="p" data-act="iinc" data-v="${k}" aria-label="Añadir">+</button></div></div>`).join("");
+ return `<div class="label">Lo que ya tenéis</div>
+ <div class="card" style="padding-top:2px;padding-bottom:2px">${rows}</div>
+ <p class="note" style="margin-top:0">La app gasta primero lo que tenéis y solo os pide craftear el resto. Con las balas, el + suma de 10 en 10.</p>
+ <div class="card" style="padding-top:2px;padding-bottom:2px;margin-top:12px"><button class="tg" data-act="hecraft"><div class="info"><b style="font-size:15px">Podemos craftear granadas 40mm</b><div class="sub">Necesitáis el lanzagranadas y el plano. Rompen un muro de piedra con 29 (unos 2.465 de azufre).</div></div><span class="sw${st.heCraft?" on":""}"></span></button></div>
+ <div class="btns"><button class="btn" data-act="invclear">Vaciar inventario</button></div>`;
+}
+function rolesHTML(c){
+ const a=ANGEL.filter(k=>c.bring[k]).map(k=>`${c.bring[k]} ${KN[k][c.bring[k]===1?0:1]}${c.have[k]?` <span class="sm">(tenéis ${c.have[k]}, craftear ${c.craft[k]})</span>`:""}`);
+ const m=c.bring.ex?`${c.bring.ex} balas explosivas${c.have.ex?` <span class="sm">(tenéis ${c.have.ex}, craftear ${c.craft.ex})</span>`:""}`:'<span class="sm">Solo cubrir</span>';
+ return{a:a.length?a.join("<br>"):'<span class="sm">Nada que poner</span>',m};
+}
+function planView(r){
+ const c=compute(r);
+ if(!c.inst.length)return `<p class="empty">Todavía no hay nada que romper.<br>Añadid piezas en <b>Objetivos</b>.</p>`;
+ const kinds=ORDER.filter(k=>c.bring[k]);
+ const tbl=`<table><tr><th>Explosivo</th><th>Plan</th><th>Llevad</th><th>Tenéis</th><th>Craftear</th></tr>${kinds.map(k=>`<tr><td class="k">${KT[k]}</td><td>${fmt(c.plan[k])}</td><td>${fmt(c.bring[k])}</td><td>${fmt(c.have[k])}</td><td class="c">${fmt(c.craft[k])}</td></tr>`).join("")}</table>`;
+ const bA=bill(c.craft,ANGEL),bM=bill(c.craft,MAICOL),bT=bill(c.craft,ORDER);
+ const rows=RAW.concat(MID).filter(([k])=>bT[k]);
+ const mat=rows.length?`<table><tr><th>Material</th><th style="color:var(--yel)">Angel</th><th style="color:var(--blue)">Maicol</th><th>Total</th></tr>${rows.map(([k,l])=>`<tr><td class="k">${l}</td><td>${bA[k]?fmt(bA[k]):"—"}</td><td>${bM[k]?fmt(bM[k]):"—"}</td><td class="c">${fmt(bT[k])}</td></tr>`).join("")}</table><p class="note">Pólvora, explosivos y granadas de lata son pasos intermedios: ya están incluidos en el azufre y el carbón.</p>`:`<p class="sub">No hay que craftear nada: os llega con lo que tenéis.</p>`;
+ const groups=[];const gi={};
+ c.inst.forEach(s=>{const p=s.P[s.cur],key=s.e.t.id+"|"+p.join(",");if(gi[key]===undefined){gi[key]=groups.length;groups.push({e:s.e,p,n:0})}groups[gi[key]].n++});
+ const brk=groups.map(g=>{const x=[];if(g.e.soft)x.push("desde dentro");if(g.e.pct<100)x.push(`vida ${g.e.pct} %`);return `<tr><td><b>${g.n}× ${g.e.t.n}</b>${x.length?`<div class="sub" style="margin:1px 0 0">${x.join(" · ")}</div>`:""}</td><td style="color:var(--yel);text-align:right">${desc(g.p,true)}${g.n>1?" c/u":""}</td></tr>`}).join("");
+ const half=Math.ceil(c.s1/2/100)*100;
+ return `<div class="card"><div class="big">${fmt(c.s1)} <small>azufre a farmear</small></div>
+ <div class="sub">${c.s1?`A medias: unos <b style="color:var(--green)">${fmt(half)}</b> cada uno. `:""}Sin margen serían ${fmt(c.s0)}.${r.mode!=="combo"?` Modo: ${KT[r.mode]} solo.`:""}</div>${c.heShort?`<div class="warn">Os faltan granadas 40mm y no las podéis craftear: añadidlas al inventario o activad el crafteo.</div>`:""}</div>
+ <div class="label">Qué lleva cada uno</div>
+ <div class="role a"><h3>Angel · explosivos</h3><div>${rolesHTML(c).a}</div></div>
+ <div class="role m"><h3>Maicol · rifle</h3><div>${rolesHTML(c).m}</div></div>
+ <div class="card">${tbl}<p class="note">Margen incluido en "Llevad": satchels +25 % (fallan 1 de cada 5), balas y 40mm +10 %, cohetes +1 cada 10. El C4 no falla.</p></div>
+ <div class="label">Materiales para craftear</div>
+ <div class="card">${mat}</div>
+ <div class="label">Pieza por pieza</div>
+ <div class="card"><table>${brk}</table></div>
+ <div class="btns"><button class="btn pr" data-act="share">Compartir con Maicol</button><button class="btn" data-act="copy">Copiar texto</button></div>
+ <div class="btns"><button class="btn" data-act="clear">Vaciar este raid</button></div>`;
+}
+function liveView(r){
+ const c=compute(r);
+ if(!c.inst.length)return `<p class="empty">Cuando tengáis el raid montado, aquí vais tachando cada pieza que rompéis y os dice qué explosivos os quedan.</p>`;
+ const done=r.done||{};
+ const left=[0,0,0,0,0];let nd=0;
+ const cnt={};c.inst.forEach(s=>cnt[s.e.t.id]=(cnt[s.e.t.id]||0)+1);
+ const items=c.inst.map(s=>{
+  const key=s.e.t.id+"#"+s.i,p=s.P[s.cur],isD=!!done[key];
+  if(isD)nd++;else p.forEach((v,x)=>left[x]+=v);
+  const x=[];if(s.e.soft)x.push("dentro");if(s.e.pct<100)x.push(`${s.e.pct} %`);
+  return `<button class="lv${isD?" dn":""}" style="--mc:${MAT[s.e.t.m][1]}" data-act="done" data-v="${key}"><span class="ck">${isD?"✓":""}</span><span class="info"><span class="nm" style="display:block">${s.e.t.n}${cnt[s.e.t.id]>1?" "+(s.i+1):""}${x.length?` <span class="hp">${x.join(" · ")}</span>`:""}</span><span class="how" style="display:block">${desc(p,true)}</span></span></button>`;
+ }).join("");
+ const pc=Math.round(nd/c.inst.length*100);
+ return `<div class="card"><div class="big">${nd} <small>de ${c.inst.length} piezas rotas</small></div><div class="prog"><i style="width:${pc}%"></i></div>
+ <div class="sub">${nd===c.inst.length?"<b style='color:var(--green)'>¡Raid terminado! A lootear.</b>":`Os quedan por usar: <b style="color:var(--yel)">${desc(left,false)}</b>`}</div></div>
+ <div class="label">Toca cada pieza cuando caiga</div>
+ ${items}
+ <div class="btns"><button class="btn" data-act="livereset">Empezar de cero</button></div>`;
+}
+function renderBar(){
+ const bar=$("#bar");
+ if(st.tab==="plan"){bar.style.display="none";return}
+ bar.style.display="";
+ const r=cur(),c=compute(r),R=rolesHTML(c);
+ const mini=[];const a=ANGEL.filter(k=>c.bring[k]).map(k=>`${c.bring[k]} ${KSHORT[k][c.bring[k]===1?0:1]}`);
+ if(a.length)mini.push(`<span style="color:var(--yel)">Angel</span> <b>${a.join(" · ")}</b>`);
+ if(c.bring.ex)mini.push(`<span style="color:var(--blue)">Maicol</span> <b>${c.bring.ex} balas</b>`);
+ const open=!!st.bar;
+ $("#barin").innerHTML=`<button class="bh" data-act="bar"><div class="s">${fmt(c.s1)}<small>azufre a farmear</small></div><div class="mini">${mini.join("<br>")||"Añadid lo que hay hasta el loot"}</div><span class="chev">${chev}</span></button>
+ ${open?`<div class="roles"><div class="r a"><b>ANGEL · explosivos</b><div>${R.a}</div></div><div class="r m"><b>MAICOL · rifle</b><div>${R.m}</div></div></div>
+ ${c.s1?`<div class="half">A medias: unos ${fmt(Math.ceil(c.s1/2/100)*100)} de azufre cada uno.</div>`:""}
+ <div class="btns"><button class="btn" data-act="tab" data-v="plan">Ver plan</button><button class="btn" data-act="share">Compartir</button><button class="btn" data-act="clear">Vaciar</button></div>`:""}`;
+}
 
-document.getElementById("q").addEventListener("input",render);
-function planText(){
- const {tot,s}=window._tot||{tot:{},s:0};const m=v=>Math.ceil(v*1.1);
- const L=["RAID · Angel & Maicol"];
- for(const t of T){const n=q[t.id]||0;if(!n||!t.c)continue;const o=cost(t);L.push(`- ${n}× ${t.n}: ${desc(o)}`)}
- if(L.length===1)return "";
- const a=[];if(tot.c4)a.push(`${tot.c4} C4 (llevar ${m(tot.c4)})`);if(tot.rk)a.push(`${tot.rk} cohetes (llevar ${m(tot.rk)})`);if(tot.sat)a.push(`${tot.sat} satchels (llevar ${m(tot.sat)})`);
- L.push("","ANGEL: "+(a.join(", ")||"nada"),"MAICOL: "+(tot.ex?`${tot.ex} balas explosivas (llevar ${m(tot.ex)})`:"cubrir"),`TOTAL: ${fmt(s)} azufre (con margen ${fmt(Math.ceil(s*1.1/100)*100)})`);
+/* ===================== RAIDS GUARDADOS ===================== */
+function openSheet(){
+ $("#sheetpn").innerHTML=`<h3>Raids guardados <button class="ib" data-act="closesheet" aria-label="Cerrar">✕</button></h3>
+ ${st.raids.map(r=>`<div class="rr${r.id===st.cur?" on":""}"><button class="go" data-act="sel" data-v="${r.id}"><b>${esc(r.name)}</b><small>${pieces(r)} piezas · ${fmt(compute(r).s1)} azufre</small></button><button class="ib" data-act="ren" data-v="${r.id}" aria-label="Renombrar">✎</button><button class="ib" data-act="dup" data-v="${r.id}" aria-label="Duplicar">⧉</button><button class="ib" data-act="del" data-v="${r.id}" aria-label="Borrar">🗑</button></div>`).join("")}
+ <div class="btns"><button class="btn pr" data-act="new">＋ Nuevo raid</button></div>
+ <p class="note">Guardad cada base que tengáis fichada, o la vuestra para saber cuánto le costaría a otros raidearos.</p>`;
+ $("#sheet").classList.add("on");
+}
+function closeSheet(){$("#sheet").classList.remove("on")}
+
+/* ===================== COMPARTIR ===================== */
+function enc(r){const o={n:r.name,m:r.mode,q:{}};for(const k in r.q){const e=r.q[k];if(e&&e.n>0)o.q[k]=[e.n,e.s?1:0,e.h||100]}return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function dec(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";const o=JSON.parse(decodeURIComponent(escape(atob(s))));const q={};for(const k in o.q||{}){if(!TI[k]||TI[k].nd)continue;const[n,sd,h]=o.q[k];q[k]={n:Math.max(0,Math.min(99,n|0)),s:sd?1:0,h:Math.max(5,Math.min(100,h|0||100))}}const modes=["combo","c4","rk","sat","ex","he"];return fresh(String(o.n||"Raid compartido").slice(0,40),q,modes.includes(o.m)?o.m:"combo")}
+const link=r=>location.origin+location.pathname+"#r="+enc(r);
+function planText(r){
+ const c=compute(r);if(!c.inst.length)return"";
+ const L=["RAID · "+r.name];
+ const groups={};c.inst.forEach(s=>{const p=s.P[s.cur],k=s.e.t.id+"|"+p.join(",");(groups[k]=groups[k]||{e:s.e,p,n:0}).n++});
+ for(const k in groups){const g=groups[k],x=[];if(g.e.soft)x.push("dentro");if(g.e.pct<100)x.push(`vida ${g.e.pct}%`);L.push(`- ${g.n}× ${g.e.t.n}${x.length?" ("+x.join(", ")+")":""}: ${desc(g.p,false)}${g.n>1?" c/u":""}`)}
+ const a=ANGEL.filter(k=>c.bring[k]).map(k=>`${c.bring[k]} ${KN[k][c.bring[k]===1?0:1]}${c.have[k]?` (craftear ${c.craft[k]})`:""}`);
+ L.push("","ANGEL: "+(a.join(", ")||"nada"),"MAICOL: "+(c.bring.ex?`${c.bring.ex} balas explosivas${c.have.ex?` (craftear ${c.craft.ex})`:""}`:"cubrir"),`AZUFRE A FARMEAR: ${fmt(c.s1)} (unos ${fmt(Math.ceil(c.s1/2/100)*100)} cada uno)`);
  return L.join("\n");
 }
-document.getElementById("copy").addEventListener("click",async()=>{
- const t=planText(),sv=document.getElementById("save");
- if(!t){sv.textContent="Añade algo primero.";return}
- try{await navigator.clipboard.writeText(t);sv.textContent="Plan copiado. Pégaselo a Maicol por WhatsApp o Discord.";}
- catch(e){const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand("copy")}catch(_){}ta.remove();sv.textContent=ok?"Plan copiado. Pégaselo a Maicol.":"No se pudo copiar en este navegador.";}
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand("copy")}catch(_){}ta.remove();return ok}}
+async function share(){
+ const r=cur(),t=planText(r);
+ if(!t){toast("Añade algo primero");return}
+ const url=link(r);
+ if(navigator.share){try{await navigator.share({title:"Raid · "+r.name,text:t+"\n\nÁbrelo en la app:",url});return}catch(e){if(e&&e.name==="AbortError")return}}
+ toast(await copyText(t+"\n\nÁbrelo en la app: "+url)?"Plan y enlace copiados":"No se pudo copiar");
+}
+function importHash(){
+ const h=location.hash;if(!h.startsWith("#r="))return;
+ try{const r=dec(h.slice(3));if(st.raids.some(x=>x.name===r.name))r.name=(r.name+" (compartido)").slice(0,40);snapData=JSON.stringify(st);st.raids.push(r);st.cur=r.id;st.tab="obj";save();setTimeout(()=>toast(`Raid "${r.name}" importado`,true),300)}catch(e){setTimeout(()=>toast("El enlace no es válido"),300)}
+ history.replaceState(null,"",location.pathname+location.search);
+}
+
+/* ===================== EVENTOS ===================== */
+const setQ=(id,n)=>{const r=cur();n=Math.max(0,Math.min(99,n|0));const e=r.q[id]||{n:0,s:0,h:100};e.n=n;r.q[id]=e;save()};
+function patchItem(id){const r=cur(),n=(r.q[id]||{}).n||0,el=$("#it-"+id);if(el){el.classList.toggle("has",n>0);const i=el.querySelector("input[data-q]");if(i&&document.activeElement!==i)i.value=n}renderBar();refreshTabs()}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-act]");if(!b)return;
+ const a=b.dataset.act,v=b.dataset.v,id=b.dataset.id,r=cur();
+ if(a==="closesheet"){if(e.target===b||b.tagName==="BUTTON")closeSheet();return}
+ switch(a){
+  case"tab":st.tab=v;save();$("#toast").classList.remove("on");render();window.scrollTo(0,0);return;
+  case"grp":st.grp=v;save();render();return;
+  case"mode":r.mode=v;save();render();return;
+  case"inc":setQ(id,((r.q[id]||{}).n||0)+1);patchItem(id);return;
+  case"dec":setQ(id,((r.q[id]||{}).n||0)-1);patchItem(id);return;
+  case"opt":ui.open[id]=!ui.open[id];renderList();return;
+  case"soft":{const q=r.q[id]||{n:0,s:0,h:100};q.s=+v;r.q[id]=q;save();renderList();renderBar();return}
+  case"preset":snap(`Cargada "${PRESETS[+v][0]}"`);r.q={};for(const[k,n]of Object.entries(PRESETS[+v][1]))r.q[k]={n,s:0,h:100};r.done={};save();render();return;
+  case"clear":if(!pieces(r)){toast("Ya está vacío");return}snap("Raid vaciado");r.q={};r.done={};save();render();return;
+  case"bar":st.bar=!st.bar;save();render();return;
+  case"share":share();return;
+  case"copy":copyText(planText(r)).then(ok=>toast(ok?"Plan copiado":"No se pudo copiar"));return;
+  case"undo":undo();$("#toast").classList.remove("on");return;
+  case"sheet":openSheet();return;
+  case"sel":st.cur=v;save();closeSheet();render();return;
+  case"new":{const name=prompt("Nombre del raid:","Raid "+(st.raids.length+1));if(name===null)return;const nr=fresh(name.trim().slice(0,40)||"Raid "+(st.raids.length+1));st.raids.push(nr);st.cur=nr.id;st.tab="obj";save();closeSheet();render();return}
+  case"ren":{const x=st.raids.find(q=>q.id===v);const name=prompt("Nuevo nombre:",x.name);if(name===null||!name.trim())return;x.name=name.trim().slice(0,40);save();openSheet();render();return}
+  case"dup":{const x=st.raids.find(q=>q.id===v);const nr=JSON.parse(JSON.stringify(x));nr.id=uid();nr.name=(x.name+" (copia)").slice(0,40);nr.done={};st.raids.push(nr);save();openSheet();toast("Raid duplicado");return}
+  case"del":{const x=st.raids.find(q=>q.id===v);snap(`Borrado "${x.name}"`);st.raids=st.raids.filter(q=>q.id!==v);if(!st.raids.length)st.raids.push(fresh("Raid 1"));if(st.cur===v)st.cur=st.raids[0].id;save();openSheet();render();return}
+  case"iinc":st.inv[v]=(st.inv[v]||0)+(v==="ex"?10:1);save();render();return;
+  case"idec":st.inv[v]=Math.max(0,(st.inv[v]||0)-(v==="ex"?10:1));save();render();return;
+  case"hecraft":st.heCraft=!st.heCraft;if(!st.heCraft&&!(st.inv.he>0))st.raids.forEach(x=>{if(x.mode==="he")x.mode="combo"});save();render();return;
+  case"invclear":snap("Inventario vaciado");st.inv={};save();render();return;
+  case"done":{r.done=r.done||{};if(r.done[v])delete r.done[v];else r.done[v]=1;save();const y=window.scrollY;render();window.scrollTo(0,y);return}
+  case"livereset":snap("Progreso reiniciado");r.done={};save();render();return;
+ }
 });
+document.addEventListener("change",e=>{
+ const t=e.target;
+ if(t.dataset.q){setQ(t.dataset.q,parseInt(t.value,10)||0);t.value=(cur().q[t.dataset.q]||{}).n||0;patchItem(t.dataset.q)}
+ else if(t.dataset.i){st.inv[t.dataset.i]=Math.max(0,parseInt(t.value,10)||0);save();render()}
+ else if(t.dataset.h){renderList();renderBar()}
+});
+document.addEventListener("input",e=>{
+ const t=e.target;
+ if(t.id==="q"){ui.q=t.value;renderList()}
+ else if(t.dataset.h){const r=cur(),id=t.dataset.h,q=r.q[id]||{n:0,s:0,h:100};q.h=+t.value;r.q[id]=q;save();const l=$("#hl-"+id);if(l)l.textContent=t.value+" %"}
+});
+document.addEventListener("focusin",e=>{if(e.target.matches("input[type=number]"))setTimeout(()=>e.target.select(),0)});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches("input[type=number]"))e.target.blur()});
+window.addEventListener("hashchange",()=>{importHash();render()});
+
+importHash();
 render();
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))navigator.serviceWorker.register("sw.js").catch(()=>{});
+window.RA={dmgOf,getPlans,solve,compute,bill,T,TI,S,ORDER,enc,dec,st:()=>st};
 </script>
 </body></html>
