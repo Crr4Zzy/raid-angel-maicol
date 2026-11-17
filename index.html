@@ -4,7 +4,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Raid">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="theme-color" content="#14110f">
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" href="icon.png">
@@ -19,10 +19,8 @@ body.hascats{padding-top:calc(env(safe-area-inset-top) + 143px)}
 body.bopen{padding-bottom:calc(300px + env(safe-area-inset-bottom))}
 button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
 input{font:inherit;color:inherit}
-.top{position:fixed;top:0;left:0;right:0;max-width:720px;margin:0 auto;z-index:30;background:var(--bg);padding:env(safe-area-inset-top) 14px 0;border-bottom:1px solid var(--line);transition:box-shadow .2s}
-.top.mini{box-shadow:0 8px 20px rgba(0,0,0,.5)}
-.hdw{height:48px;padding-top:8px;overflow:hidden;transition:height .22s ease,opacity .18s ease}
-.top.mini .hdw{height:0;opacity:0}
+.top{position:fixed;top:0;left:0;right:0;max-width:720px;margin:0 auto;z-index:30;background:var(--bg);padding:env(safe-area-inset-top) 14px 0;border-bottom:1px solid var(--line);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.hdw{height:48px;padding-top:8px}
 .hd{display:flex;align-items:center;gap:8px;height:40px}
 .logo{flex-shrink:0;line-height:1}
 .logo b{display:block;font-weight:900;font-size:20px;letter-spacing:-.5px;text-transform:uppercase}
@@ -619,8 +617,6 @@ document.addEventListener("input",e=>{
 });
 document.addEventListener("focusin",e=>{if(e.target.matches("input[type=number]"))setTimeout(()=>e.target.select(),0)});
 document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches("input[type=number]"))e.target.blur()});
-let lastY=0;
-window.addEventListener("scroll",()=>{const y=window.scrollY,tp=$("#top");if(y<40){tp.classList.remove("mini");lastY=y;return}if(y>lastY+6){tp.classList.add("mini");lastY=y}else if(y<lastY-6){tp.classList.remove("mini");lastY=y}},{passive:true});
 window.addEventListener("hashchange",()=>{importHash();render()});
 
 importHash();
