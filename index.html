@@ -13,13 +13,17 @@
 <style>
 :root{--bg:#14110f;--card:#1f1a17;--card2:#261f1b;--line:#33291f;--line2:#3a302a;--ink:#e8e2d9;--mut:#a99f92;--mut2:#8d8377;--red:#cd412b;--yel:#f2b84b;--blue:#7fb2ff;--green:#7fbf7f;--wood:#c08a52;--stone:#a8a49c;--metal:#cfd5da;--hqm:#5fb0e0}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{background:var(--bg)}
-body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:720px;margin:0 auto;padding-bottom:calc(96px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%}
+html{background:var(--bg);overscroll-behavior-y:none}
+body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:720px;margin:0 auto;padding-top:calc(env(safe-area-inset-top) + 93px);padding-bottom:calc(96px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+body.hascats{padding-top:calc(env(safe-area-inset-top) + 143px)}
 body.bopen{padding-bottom:calc(300px + env(safe-area-inset-bottom))}
 button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
 input{font:inherit;color:inherit}
-.top{position:sticky;top:0;z-index:30;background:rgba(20,17,15,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:calc(8px + env(safe-area-inset-top)) 14px 0;border-bottom:1px solid var(--line)}
-.hd{display:flex;align-items:center;gap:8px}
+.top{position:fixed;top:0;left:0;right:0;max-width:720px;margin:0 auto;z-index:30;background:var(--bg);padding:env(safe-area-inset-top) 14px 0;border-bottom:1px solid var(--line);transition:box-shadow .2s}
+.top.mini{box-shadow:0 8px 20px rgba(0,0,0,.5)}
+.hdw{height:48px;padding-top:8px;overflow:hidden;transition:height .22s ease,opacity .18s ease}
+.top.mini .hdw{height:0;opacity:0}
+.hd{display:flex;align-items:center;gap:8px;height:40px}
 .logo{flex-shrink:0;line-height:1}
 .logo b{display:block;font-weight:900;font-size:20px;letter-spacing:-.5px;text-transform:uppercase}
 .logo b span{color:var(--red)}
@@ -28,11 +32,11 @@ input{font:inherit;color:inherit}
 .raidbtn span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .raidbtn small{color:var(--mut2);font-weight:600;font-size:12px}
 .ib{width:40px;height:40px;border-radius:10px;border:1px solid var(--line2);background:var(--card);display:grid;place-items:center;flex-shrink:0}
-.tabs{display:flex;margin:6px -4px 0}
-.tab{flex:1;padding:9px 2px 10px;font-size:14px;font-weight:700;color:var(--mut);border-bottom:3px solid transparent;position:relative}
+.tabs{display:flex;height:44px;margin:0 -4px}
+.tab{flex:1;height:44px;padding:2px 2px 0;font-size:14px;font-weight:700;color:var(--mut);border-bottom:3px solid transparent;position:relative}
 .tab.on{color:var(--ink);border-bottom-color:var(--red)}
 .tab em{font-style:normal;font-size:11px;background:var(--red);color:#fff;border-radius:999px;padding:1px 6px;margin-left:4px;vertical-align:1px}
-.cats{display:flex;gap:6px;overflow-x:auto;padding:8px 0 10px;scrollbar-width:none;margin:0 -14px;padding-left:14px;padding-right:14px}
+.cats{display:flex;align-items:center;gap:6px;height:50px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:0 14px}
 .cats::-webkit-scrollbar,.modes::-webkit-scrollbar{display:none}
 main{padding:12px 14px 0}
 .label{font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:var(--mut);margin:14px 0 7px;font-weight:700}
@@ -152,12 +156,12 @@ td.c{color:var(--yel);font-weight:800}
 .warn{color:#e59a85;font-size:12.5px;margin-top:6px}
 </style></head><body>
 
-<div class="top">
- <div class="hd">
+<div class="top" id="top">
+ <div class="hdw"><div class="hd">
   <div class="logo"><b>R<span>ai</span>d</b><i>ANGEL &amp; MAICOL</i></div>
   <button class="raidbtn" data-act="sheet"><span id="rname">Raid</span><small>▾</small></button>
   <button class="ib" data-act="share" aria-label="Compartir con Maicol"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button>
- </div>
+ </div></div>
  <div class="tabs" id="tabs"></div>
  <div class="cats" id="cats"></div>
 </div>
@@ -414,6 +418,7 @@ function render(){
  document.body.classList.toggle("bopen",!!st.bar&&st.tab!=="plan");
  refreshTabs();
  const cats=$("#cats");
+ document.body.classList.toggle("hascats",st.tab==="obj");
  if(st.tab==="obj"){cats.style.display="";cats.innerHTML=[["all","Todo"]].concat(Object.entries(G)).map(([k,l])=>`<button class="chip sm${st.grp===k?" on":""}" data-act="grp" data-v="${k}">${l}</button>`).join("")}
  else{cats.style.display="none";cats.innerHTML=""}
  const m=$("#main");
@@ -626,6 +631,8 @@ document.addEventListener("input",e=>{
 });
 document.addEventListener("focusin",e=>{if(e.target.matches("input[type=number]"))setTimeout(()=>e.target.select(),0)});
 document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches("input[type=number]"))e.target.blur()});
+let lastY=0;
+window.addEventListener("scroll",()=>{const y=window.scrollY,tp=$("#top");if(y<40){tp.classList.remove("mini");lastY=y;return}if(y>lastY+6){tp.classList.add("mini");lastY=y}else if(y<lastY-6){tp.classList.remove("mini");lastY=y}},{passive:true});
 window.addEventListener("hashchange",()=>{importHash();render()});
 
 importHash();
